@@ -1,9 +1,0 @@
-Self Study Topics - 
-Class Component , 
-What is Prototype , 
-Learn Basics of Tailwind,
-Normal Function and Arrow Function Differnce,
-
-
-
-Task : Install Tailwind Css

@@ -1,51 +1,36 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TodoInput from "./TodoInput";
-import { MdDelete } from "react-icons/md";
-import { v4 as uuidv4 } from "uuid";
+import TodoItem from "./TodoItem";
 
-function TodoApp() {
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
+function Todo() {
+  const [tasks, setTasks] = useState([]);
 
-  const handleInputChange = (e) => {
-    setNewTodo(e.target.value);
+  const handleAddTask = (task) => {
+    setTasks([...tasks, task]);
   };
 
-  const handleAddTodo = () => {
-    if (newTodo.trim() === "") return;
-    const uniqueId = uuidv4();
-    setTodos([...todos, { id: uniqueId, text: newTodo }]);
-    setNewTodo("");
+  const handleRemoveTask = (indexToRemove) => {
+    setTasks(tasks.filter((_, index) => index !== indexToRemove));
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">Todo List</h1>
-      <TodoInput
-        value={newTodo}
-        onChange={handleInputChange}
-        onAdd={handleAddTodo}
-      />
-      <ul className="mt-6 w-full max-w-md space-y-2">
-        {todos.map((todo) => (
-          <li
-            key={todo.id}
-            className="flex justify-between items-center bg-white p-3 rounded shadow"
-          >
-            <span>{todo.text}</span>
-            <button
-              onClick={() =>
-                setTodos(todos.filter((item) => item.id !== todo.id))
-              }
-              className="text-red-500 hover:text-red-700"
-            >
-              <MdDelete size={20} />
-            </button>
-          </li>
+    <div>
+      <h1 className="flex justify-center items-center">My To-Do List</h1>
+      <br />
+      <br />
+      <TodoInput onAdd={handleAddTask} />
+      <ul>
+        {tasks.map((task, index) => (
+          <TodoItem
+            key={index}
+            index={index}
+            task={task}
+            onRemove={handleRemoveTask}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-export default TodoApp;
+export default Todo;
