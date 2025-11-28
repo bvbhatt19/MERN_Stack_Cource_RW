@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Titan Watch - Add to Cart Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        height: 100vh;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .dashboard {
+        display: flex;
+        flex: 1;
+        gap: 30px;
+        overflow-y: auto;
+      }
+
+      .products,
+      .cart {
+        flex: 1;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+      }
+
+      .product,
+      .cart-item {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #fafafa;
+        text-align: center;
+        padding: 10px;
+        width: 180px;
+      }
+
+      .product img {
+        max-width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .product-list,
+      .cart-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      button {
+        padding: 6px 12px;
+        margin-top: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      button.remove {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Titan Watch - Dashboard</h1>
+      <div class="dashboard">
+        <div class="products">
+          <h2>Available Watches</h2>
+          <div class="product-list" id="product-list"></div>
+        </div>
+
+        <div class="cart">
+          <h2>Your Cart</h2>
+          <div class="cart-list" id="cart-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const products = [
+        {
+          id: 1,
+          name: "Titan Wireless Headphones",
+          price: 59.99,
+          image:
+            "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dwb191fd27/images/Titan/Catalog/90110WL04_3.jpg?sw=600&sh=600",
+        },
+        {
+          id: 2,
+          name: "Titan Edge Bluetooth Speaker",
+          price: 39.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY8HCeGKj3JFurvCijBp_eZmBafbwd3bj46Q&s",
+        },
+        {
+          id: 3,
+          name: "Titan Smart Watch - Rose Gold",
+          price: 89.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsNI1dEaODtllx8kk7LExX4VmZBIIk7dw-Q&s",
+        },
+        {
+          id: 4,
+          name: "Titan Smart Watch - Navy Strap",
+          price: 99.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhRgWCPDyvxgRMlP2gsC8UaWBkuWbgc85HCQ&s",
+        },
+        {
+          id: 5,
+          name: "Titan Analog-Digital Watch",
+          price: 89.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQEiqn7sOwdWUQc_5p95-Z0QLlPd9Yx_nP5A&s",
+        },
+        {
+          id: 6,
+          name: "Titan Classic Leather Watch",
+          price: 109.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZvZ4hmvybXUp0p94fZvr-3UkeEIlb0VArSg&s",
+        },
+        {
+          id: 7,
+          name: "Titan Chronograph Black",
+          price: 119.99,
+          image:
+            "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw04b3f13b/images/Titan/Catalog/90169NL01_2.jpg?sw=600&sh=600",
+        },
+        {
+          id: 8,
+          name: "Titan Digital Fitness Watch",
+          price: 69.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz8CM-VI-n9YH2UN8vkHimMLR2GJ0cRVz8yl65hTYhHhNqP23FFEnYI2l1z44iI4gpuIU&usqp=CAU",
+        },
+        {
+          id: 9,
+          name: "Titan Smart Series 5",
+          price: 149.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLXHaMMBlWU6_tiX7O9ZFDxiFmYUgEJFzeEM-5oZuqa4T9n0P15WCbbDC1sW4dL4B5UV8&usqp=CAU",
+        },
+        {
+          id: 10,
+          name: "Titan Urban Premium",
+          price: 79.99,
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpzM4UiAzJ4AVAu4FJurexi2OjZfVvRVCXOAM98HbIXr3tq1YY5i1Z-LDIwl-hvbFB9Js&usqp=CAU",
+        },
+      ];
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      function renderProducts() {
+        const productList = document.getElementById("product-list");
+        productList.innerHTML = "";
+        products.forEach((product) => {
+          const div = document.createElement("div");
+          div.className = "product";
+          div.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" />
+            <h3>${product.name}</h3>
+            <p>Price: $${product.price.toFixed(2)}</p>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
+          `;
+          productList.appendChild(div);
+        });
+      }
+
+      function renderCart() {
+        const cartList = document.getElementById("cart-list");
+        cartList.innerHTML = "";
+        cart.forEach((item) => {
+          const product = products.find((p) => p.id === item.id);
+          const div = document.createElement("div");
+          div.className = "cart-item";
+          div.innerHTML = `
+            <h4>${product.name}</h4>
+            <p>Quantity: ${item.quantity}</p>
+            <p>Total: $${(product.price * item.quantity).toFixed(2)}</p>
+            <button class="remove" onclick="removeFromCart(${
+              item.id
+            })">Remove</button>
+          `;
+          cartList.appendChild(div);
+        });
+      }
+
+      function addToCart(id) {
+        const existing = cart.find((item) => item.id === id);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push({ id, quantity: 1 });
+        }
+        saveCart();
+        renderCart();
+      }
+
+      function removeFromCart(id) {
+        cart = cart.filter((item) => item.id !== id);
+        saveCart();
+        renderCart();
+      }
+
+      // Initial render
+      renderProducts();
+      renderCart();
+    </script>
+  </body>
+</html>

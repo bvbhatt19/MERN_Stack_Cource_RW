@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #paratext .test{
+        display: none;
+      }
+      #head2 .test{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="paraID">DOM (Document Object Model)</h1>
+    <p class="para">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime labore
+      voluptates repellendus. Iusto nihil at ipsa neque, autem facilis facere
+      doloremque qui hic, magnam saepe ullam ea asperiores libero commodi.
+    </p>
+    <img id="img1" src="https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=" alt="">
+    <ol>
+      <li>Home</li>
+      <li>About</li>
+      <li>Contact</li>
+    </ol>
+    <h4 id="head1"></h4>
+    <h2 id="head2">
+      <p class="test">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corrupti earum pariatur praesentium accusantium vel iste, eos asperiores repellendus aliquam ducimus, nihil obcaecati. Autem consequatur pariatur odio ratione laboriosam! Ducimus.</p>
+    </h2>
+    <p id="paratext">
+      <h1 class="test">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis, quibusdam architecto? Earum ullam, beatae perferendis accusamus dolores omnis nulla sequi. Repudiandae magnam perspiciatis, velit sint consectetur maiores dignissimos consequatur veniam.</h1>
+    </p>
+    <button onclick="onclickdemo()">On Click</button>
+    <button ondblclick="dblclickdemo()" >Double Click</button>
+    <button onmousedown="mousedowndemo()"> On Mouse Down</button>
+    <button onmouseup="mouseupdemo()">Mouse Up</button>
+    <button onmousemove="mouseMovedemo()">Mouse Move</button>
+    <button onmouseover="mouseOverdemo()">Mouse Over</button>
+    <button onmouseout="mouseoutdemo()">Mouse Out</button>
+    <button contextmenu="contextmenuDemo()">Context Menu Right Click</button>
+    <!-- keydown and key press  -->
+
+    <input type="text" id="textInput" placeholder="Name...">
+    <p id="output"></p>
+    <b id="bold-data" class="bold ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat fuga ullam sunt illum quas facere doloremque, nihil suscipit. Consequatur minus, odio quod aut officiis magnam dolor temporibus voluptates voluptas asperiores!</b>
+  </body>
+</html>
+<script>
+  //Select or Target Elements
+  // document.getElementsByClassName();
+  // document.getElementsByTagName();
+  // document.getElementById();
+  // document.querySelector();
+  // document.querySelectorAll();
+  let para = document.getElementsByClassName("para");
+  console.log(para);
+  let para2 = document.getElementsByTagName("p");
+  console.log(para2);
+  let paraid = document.getElementById("paraID");
+  console.log(paraid);
+  let h1 = document.querySelector("li");
+  console.log(h1);
+  let p = document.querySelectorAll("li");
+  console.log(p);
+
+  // to change html Content
+  //   🔹 Use innerHTML when you need HTML inside an element.
+  // 🔹 Use innerText when you need only the visible text.
+  // 🔹 Use textContent when you need all the text, even if hidden.
+
+  // innerHTML : Reads or writes HTML code inside an element , If you set innerHTML, it interprets it as HTML, not just text.
+
+  let heading = document.getElementById("head1");
+  heading.innerHTML = "<i>This Is innerHtml Demo</i>";
+  console.log(heading);
+
+  // innerText : Reads or writes only the visible text inside an element , Ignores hidden elements and does not include HTML tags.
+  let heading2 = document.getElementById("head2");
+  heading2.innerText = "<u>This Is InnerText Demo</u>";
+  console.log(heading2);
+
+  // textContent : Similar to innerText, but it gets all text, even hidden text ,  Faster than innerText because it doesn’t check for visible styles.
+  let paratext = document.getElementById("paratext");
+  paratext.textContent = "<b>This Is textContent Demo</b>";
+  console.log(paratext);
+
+// Events
+// 1. Keyboard Events : Keyboard events trigger when a user interacts with the keyboard. -keydown ,keyup ,keypress
+
+// 2 . Mouse Events : click,dblclick,mousedown,mouseup,mousemove,mouseover,mouseout,contextmenu	
+
+
+function onclickdemo(){
+  console.log("This Is Onclick Events Demo")
+}
+
+function clickdemo(){
+  console.log("This is Click Event")
+}
+function dblclickdemo(){
+  console.log("This is Double Click Event")
+}
+function mousedowndemo(){
+  console.log("This is Mouse Down Event")
+}
+function mouseupdemo(){
+  console.log("This is Mouse Up Event")
+}
+function mouseMovedemo(){
+  console.log("This is Mouse Move Event")
+}
+function mouseOverdemo(){
+  console.log("This is Mouse Over Event")
+}
+function mouseoutdemo(){
+  console.log("This is Mouse Out Event")
+}
+function contextmenuDemo(){
+  console.log("This is Context Menu Event")
+}
+//getAttribute
+
+let headdata= document.getElementById("img1");
+let getdata=headdata.getAttribute("src");
+console.log(getdata);
+
+
+//setAttribute
+
+let data = document.getElementById("img1");
+let setdata = data.setAttribute('style', 'border: 5px dotted black; width: 200px;');
+console.log(setdata);
+
+//removeAttribute
+
+let setdata2 =data.removeAttribute("style");
+console.log(setdata2); 
+
+//ClassName : When We want to add class or multiple Classes it use
+let bdata= document.getElementById("bold-data");
+bdata.className="bold-para";
+</script>

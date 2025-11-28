@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
+.container{
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    flex-wrap: wrap;
+    
+}
+.container .box1{
+    height: 100%;
+    width: 350px;
+    border: 2px solid rgb(85, 85, 10);
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    min-width: 300px;
+    flex: 1 1 calc(25% - 20px);
+    margin: 20px;
+}
+.container .box2{
+    height: 100%;
+    width: 350px;
+    border: 2px solid rgb(85, 85, 10);
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    min-width: 300px;
+    flex: 1 1 calc(25% - 20px);
+    margin: 20px;
+}
+.container .box3{
+    height: 100%;
+    width: 350px;
+    border: 2px solid rgb(85, 85, 10);
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    min-width: 300px;
+    flex: 1 1 calc(25% - 20px);
+    margin: 20px;
+
+}
+.container .box4{
+    height: 100%;
+    width: 350px;
+    border: 2px solid rgb(85, 85, 10);
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    min-width: 300px;
+    flex: 1 1 calc(25% - 20px);
+    margin: 20px;
+
+}

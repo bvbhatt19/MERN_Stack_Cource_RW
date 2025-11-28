@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COVID-19 Stats by Country</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        width: 220px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .card img {
+        width: 50px;
+        height: auto;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+
+      .card h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>COVID-19 Live Stats</h1>
+    <div class="card-container" id="data-container"></div>
+
+    <script>
+      const apiURL = "https://disease.sh/v3/covid-19/countries";
+
+      async function fetchCovidData() {
+        try {
+          const res = await fetch(apiURL);
+          const data = await res.json();
+          showCards(data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          document.getElementById("data-container").innerHTML =
+            "<p>Failed to load data.</p>";
+        }
+      }
+
+      function showCards(countries) {
+        const container = document.getElementById("data-container");
+        container.innerHTML = "";
+
+        countries.forEach((country) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+          <img src="${country.countryInfo.flag}" alt="${country.country}" />
+          <h2>${country.country}</h2>
+          <p><strong>Cases:</strong> ${country.cases.toLocaleString()}</p>
+          <p><strong>Recovered:</strong> ${country.recovered.toLocaleString()}</p>
+          <p><strong>Deaths:</strong> ${country.deaths.toLocaleString()}</p>
+        `;
+          container.appendChild(card);
+        });
+      }
+
+      fetchCovidData();
+    </script>
+  </body>
+</html>

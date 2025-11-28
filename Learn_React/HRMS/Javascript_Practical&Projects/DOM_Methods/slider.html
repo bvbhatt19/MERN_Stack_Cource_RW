@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Slider</title>
+
+    <!-- Bootstrap Icons CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #0769303b;
+        font-family: Arial, sans-serif;
+      }
+      .slider {
+        width: 70%;
+        max-width: 800px;
+        border: 2px solid black;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+      }
+      .img {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        margin-bottom: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 5px double black;
+      }
+
+      .img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: white;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .overlay h2 {
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .overlay p {
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      .overlay .buttons {
+        display: flex;
+        gap: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- slider -->
+    <div class="slider">
+      <div class="img">
+        <img src="" alt="" id="img" />
+        <div class="overlay">
+          <h2 id="head"></h2>
+          <p id="desc"></p>
+          <div class="buttons">
+            <button id="prevBtn" style="background: none; border: none">
+              <i
+                style="font-size: 40px; color: white"
+                class="bi bi-chevron-left"
+              ></i>
+            </button>
+            <button id="nextBtn" style="background: none; border: none">
+              <i
+                style="font-size: 40px; color: white"
+                class="bi bi-chevron-right"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const slides = [
+        {
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSStei3jKPRoQiRzn4C7Hv-c8CRP9cyLUysliRKFCIEC3aCKcY3XOsdaDO3ptZ2PIFnKDs&usqp=CAU",
+          title: "Mariposa Barbie",
+          description:
+            "Mariposa doll has extraordinary fairy wings – large and colorful ones, like all butterfly fairies!",
+        },
+        {
+          image:
+            "https://static.vecteezy.com/system/resources/thumbnails/053/730/824/small_2x/sun-rain-clouds-cartoon-landscape-idyllic-nature-scene-8k-illustration-photo.jpeg",
+          title: "Cartoon Landscape",
+          description:
+            "A colorful cartoon landscape showing a mix of sunshine and rain in nature.",
+        },
+        {
+          image:
+            "https://img.freepik.com/free-vector/forest-night-landscape-scene-with-different-wild-animals_1308-66125.jpg",
+          title: "Night in the Forest",
+          description:
+            "A peaceful night forest filled with wild animals under a starry sky.",
+        },
+        {
+          image:
+            "https://img.pixers.pics/pho_wat(s3:700/FO/57/01/34/25/700_FO57013425_77a3903e7c58c051f4ac8d5dcb610b2e.jpg,700,393,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,343,jpg)/stickers-animals-wildlife-with-landscape-background.jpg",
+          title: "Wildlife Adventure",
+          description:
+            "A fun wildlife-themed cartoon scene with various animals and a scenic background.",
+        },
+      ];
+
+      console.log(slides[0].image);
+      console.log(slides[0].title);
+      console.log(slides[0].description);
+
+      let currentIndex = 0;
+
+      function ShowSlide() {
+        document.getElementById("img").src = slides[currentIndex].image;
+        document.getElementById("head").innerHTML = slides[currentIndex].title;
+        document.getElementById("desc").innerHTML =
+          slides[currentIndex].description;
+      }
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        currentIndex++;
+        if (currentIndex >= slides.length) {
+          currentIndex = 0;
+        }
+        ShowSlide();
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+          currentIndex = slides.length - 1;
+        }
+        ShowSlide();
+      });
+
+      setInterval(() => {
+        currentIndex++;
+        if (currentIndex >= slides.length) {
+          currentIndex = 0;
+        }
+        ShowSlide();
+      }, 5000);
+
+      ShowSlide();
+    </script>
+  </body>
+</html>

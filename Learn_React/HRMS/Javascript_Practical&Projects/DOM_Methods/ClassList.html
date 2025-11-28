@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ClassList Methods Example</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        margin: 20px;
+        background-color: tan;
+        transition: background-color 0.3s;
+      }
+
+      .highlight {
+        background-color: rgb(13, 68, 140);
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box" class="box"></div>
+
+    <button onclick="addHighlight()">Add Highlight</button>
+    <button onclick="removeHighlight()">Remove Highlight</button>
+    <button onclick="toggleVisibility()">Toggle Visibility</button>
+    <button onclick="checkHighlight()">Check Highlight</button>
+    <button onclick="getClassAtIndex()">Get Class at Index</button>
+
+    <script>
+      function addHighlight() {
+        const box = document.getElementById("box");
+        box.classList.add("highlight");
+      }
+      function removeHighlight() {
+        const box = document.getElementById("box");
+        box.classList.remove("highlight");
+      }
+
+      function toggleVisibility() {
+        const box = document.getElementById("box");
+        box.classList.toggle("hidden");
+      }
+
+      function checkHighlight() {
+        const box = document.getElementById("box");
+        const hasHighlight = box.classList.contains("highlight");
+        console.log(hasHighlight);
+      }
+
+      function getClassAtIndex() {
+        const box = document.getElementById("box");
+        const firstClass = box.classList.item(0);
+        console.log(firstClass);
+      }
+    </script>
+  </body>
+</html>

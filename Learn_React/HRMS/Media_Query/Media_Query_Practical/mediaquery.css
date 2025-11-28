@@ -1,0 +1,92 @@
+@media (min-width: 1400px) {
+    .container .cards {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 30px;
+    }
+    .container .cards .card1,
+    .container .cards .card2,
+    .container .cards .card3,
+    .container .cards .card4 {
+        flex: 1 1 25%;
+        max-width: 300px;
+    }
+}
+
+@media (min-width:1200px) and (max-width:1399px){
+    .container {
+        width: 95%;
+    }
+ .container .cards .card1{
+    flex: 1 1 calc(100% - 50%);
+}
+.container .cards .card2{
+    flex: 1 1 calc(100% - 60%);
+}
+.container .cards .card3{
+    flex: 1 1 calc(100% - 80%);
+}
+.container .cards .card4{
+    flex: 1 1 calc(100% - 10%);
+}
+}
+
+@media (min-width:992px) and (max-width:1199px){
+    .container2{
+        width: 95%;
+    }
+    .container2 .box1{
+        flex: 1 1 calc(100% - 50%);
+    }
+    .container2 .box1 p{
+        font-size: 14px;
+    }
+    .container2 .box1 .logo img{
+        width: 15%
+    }
+    .container2 .box1 button{
+        height: 30px;
+        width: 80px;
+    }
+    .container2 .box2 img{
+        width: 90%;
+        height: 60%;
+    }
+}
+
+@media (min-width:768px) and (max-width:991px){
+    .container2{
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+        flex: 1 1 calc(100% - 50%);
+    }
+ 
+
+}
+
+@media (min-width:576px) and (max-width:767px){
+    .container2{
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 60px;
+        justify-content: center;
+        align-items: center;
+        flex: 1 1 calc(100% - 50%);
+        
+    }
+    .container2 .box1{
+        font-size: 14px;
+        height: 500px;
+        width: 500px;
+    }
+    .container2 .box1 .logo img{
+        width: 15%
+    }
+}

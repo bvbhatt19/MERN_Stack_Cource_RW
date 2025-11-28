@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stylish Stopwatch</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to left, #afc0ff, #a0e2ff65);
+      }
+
+      #stopwatch {
+        width: 500px;
+        height: 500px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 50%;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      #display {
+        font-size: 60px;
+        color: #333;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      button {
+        width: 100px;
+        height: 100px;
+        padding: 12px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 50%;
+        background-color: #6c5ce7;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      button:hover {
+        background-color: #341f97;
+        transform: scale(1.05);
+      }
+
+      button:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stopwatch">
+      <center>
+        <h1 style="color: #333; padding-top: 50px">My Stopwatch</h1>
+      </center>
+      <h3 id="display">00:00:00</h3>
+      <div>
+        <button id="stop">
+          <i style="font-size: 50px" class="bi bi-stop-circle-fill"></i>
+        </button>
+        <button id="start">
+          <i style="font-size: 50px" class="bi bi-play-fill"></i>
+        </button>
+        <button id="reset">
+          <i style="font-size: 50px" class="bi bi-arrow-clockwise"></i>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let second = 0,
+        minute = 0,
+        hour = 0,
+        timer;
+
+      const updateDisplay = () => {
+        document.getElementById("display").innerHTML = `${hour
+          .toString()
+          .padStart(2, "0")}:${minute.toString().padStart(2, "0")}:${second
+          .toString()
+          .padStart(2, "0")}`;
+      };
+
+      document.getElementById("start").addEventListener("click", () => {
+        if (timer) return;
+        timer = setInterval(() => {
+          second++;
+          if (second === 60) {
+            second = 0;
+            minute++;
+          }
+          if (minute === 60) {
+            minute = 0;
+            hour++;
+          }
+          updateDisplay();
+        }, 1000);
+      });
+
+      document.getElementById("stop").addEventListener("click", () => {
+        clearInterval(timer);
+        timer = null;
+      });
+
+      document.getElementById("reset").addEventListener("click", () => {
+        clearInterval(timer);
+        timer = null;
+        second = 0;
+        minute = 0;
+        hour = 0;
+        updateDisplay();
+      });
+
+      updateDisplay();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UDF</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  //Normal function Q-1 : Multiply Three Numbers
+  let a;
+  let b;
+  let c;
+
+  function multiply(a, b, c) {
+    let d = a * b * c;
+    console.log(d);
+  }
+  multiply(2, 2, 2);
+
+  //Arrow function Q-1 : Multiply Three Numbers
+
+  let math;
+  let science;
+  let hindi;
+
+  let total = (math, science, hindi) => {
+    console.log(math * science * hindi);
+  };
+  total(5, 5, 5);
+
+  //Normal function Q-2 : Find Max Value From Three Values
+
+  let no1;
+  let no2;
+  let no3;
+  let max;
+  function maxValue(no1, no2, no3) {
+    if (no1 >= no2 && no1 >= no3) {
+      max = no1;
+      console.log("Maximum No is : " + max);
+    } else if (no2 >= no1 && no2 >= no3) {
+      max = no2;
+      console.log("Maximum No is : " + max);
+    } else {
+      max = no3;
+      console.log("Maximum No is : " + max);
+    }
+  }
+  maxValue(10000, 5555555, 20);
+
+  //Arrow Function Q-2 : Find Max Value From Three Values
+
+  let x;
+  let y;
+  let z;
+  const maximumNo = (x, y, z) => {
+    let max2 = Math.max(x, y, z);
+    console.log("Maximum No is : " + max2);
+  };
+  maximumNo(980, 1560, 250);
+
+  //Normal function Q-3 : Area of Square
+
+  function areaOfSquare(l) {
+    return l * l;
+  }
+  console.log("Area of Square is : " + areaOfSquare(10) + " m2");
+  console.log("Area of Square is : " + areaOfSquare(8) + " m2");
+
+  //Area of Circle Q-4
+
+  function findAreaOfCircle(radius) {
+    const pi = Math.PI;
+    const area = pi * radius * radius;
+    return area;
+  }
+  console.log(findAreaOfCircle(5));
+
+  // Area of Rectangle - Q5
+  function areaOfRectangle(length, width) {
+    return length * width;
+  }
+  console.log("Area of Rectangle:", areaOfRectangle(5, 10));
+  // Area of Triangle - Q6
+  function areaOfTriangle(base, height) {
+    return 0.5 * base * height;
+  }
+  console.log("Area of Triangle:", areaOfTriangle(4, 8));
+
+  // Volume of Cube
+  function volumeOfCube(side) {
+    return side * side * side;
+  }
+  console.log("Volume of Cube:", volumeOfCube(3));
+  // Volume of Cylinder
+  function volumeOfCylinder(radius, height) {
+    return Math.PI * radius * radius * height;
+  }
+  console.log("Volume of Cylinder:", volumeOfCylinder(3, 7));
+  // Volume of Cone
+  function volumeOfCone(radius, height) {
+    return (1 / 3) * Math.PI * radius * radius * height;
+  }
+  console.log("Volume of Cone:", volumeOfCone(3, 7));
+</script>

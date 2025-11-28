@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stopwatch and Quotes</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      h2 {
+        margin-top: 30px;
+      }
+      .section {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+      }
+      button {
+        margin: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      #quote-box {
+        font-style: italic;
+        min-height: 50px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section">
+      <h2>Stopwatch</h2>
+      <div id="stopwatch">00:00:00</div>
+      <button onclick="startStopwatch()">Start</button>
+      <button onclick="stopStopwatch()">Stop</button>
+      <button onclick="resetStopwatch()">Reset</button>
+    </div>
+    <div class="section">
+      <h2>Random Quote</h2>
+      <div id="quote-box">Click to see a quote</div>
+      <button onclick="newQuote()">New Quote</button>
+    </div>
+
+    <script>
+      let stopwatchInterval;
+      let [hours, minutes, seconds] = [0, 0, 0];
+
+      function updateStopwatch() {
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
+        }
+        if (minutes === 60) {
+          minutes = 0;
+          hours++;
+        }
+        document.getElementById("stopwatch").textContent = `${String(
+          hours
+        ).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(
+          seconds
+        ).padStart(2, "0")}`;
+      }
+
+      function startStopwatch() {
+        if (!stopwatchInterval) {
+          stopwatchInterval = setInterval(updateStopwatch, 1000);
+        }
+      }
+
+      function stopStopwatch() {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+      }
+
+      function resetStopwatch() {
+        stopStopwatch();
+        [hours, minutes, seconds] = [0, 0, 0];
+        document.getElementById("stopwatch").textContent = "00:00:00";
+      }
+
+      const quotes = [
+        "Believe you can and you're halfway there.",
+        "You are stronger than you think.",
+        "Dream big and dare to fail.",
+        "Every day is a second chance.",
+        "Be yourself; everyone else is already taken.",
+      ];
+
+      function newQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        document.getElementById("quote-box").textContent = quotes[randomIndex];
+      }
+    </script>
+  </body>
+</html>

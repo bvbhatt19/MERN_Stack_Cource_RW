@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add to Cart - Fake Store API</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 20px;
+      }
+
+      #product_list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      #product_list > div {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 220px;
+        text-align: center;
+      }
+
+      img {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+
+      h3 {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        background-color: #00aaff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0077cc;
+      }
+
+      #product_ul {
+        margin-top: 30px;
+        padding: 0;
+        list-style-type: none;
+      }
+
+      #product_ul li {
+        background-color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      #product_ul img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        border-radius: 5px;
+      }
+
+      #product_ul h3 {
+        flex-grow: 1;
+        margin: 0;
+      }
+
+      #price_show {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="product_list">Loading products...</div>
+
+    <div>
+      <ul id="product_ul"></ul>
+      <h3 id="price_show">Total Price: $0</h3>
+    </div>
+
+    <script>
+      const productListDiv = document.getElementById("product_list");
+      const productUL = document.getElementById("product_ul");
+      const priceShow = document.getElementById("price_show");
+
+      let cartItems = JSON.parse(localStorage.getItem("AddToCart")) || [];
+      let total_price = parseFloat(localStorage.getItem("TotalPrice")) || 0;
+
+      fetch("https://fakestoreapi.com/products")
+        .then((res) => res.json())
+        .then((products) => {
+          const productList = document.getElementById("product_list");
+
+          products.forEach((product) => {
+            const productDiv = document.createElement("div");
+
+            // Create elements
+            const title = document.createElement("h3");
+            title.innerText = product.title.slice(0, 40) + "...";
+
+            const img = document.createElement("img");
+            img.src = product.image;
+
+            const btn = document.createElement("button");
+            btn.innerText = `Add To Cart - $${product.price}`;
+
+            // Add event listener instead of onclick
+            btn.addEventListener("click", () => {
+              addToCart(product.title, product.image, product.price);
+            });
+
+            // Append elements
+            productDiv.appendChild(img);
+            productDiv.appendChild(title);
+            productDiv.appendChild(btn);
+
+            productList.appendChild(productDiv);
+          });
+        });
+      function fetchProducts() {
+        fetch("https://fakestoreapi.com/products")
+          .then((res) => res.json())
+          .then((products) => {
+            productListDiv.innerHTML = ""; // Clear "Loading..."
+            products.forEach((product) => {
+              const productDiv = document.createElement("div");
+
+              const title = document.createElement("h3");
+              title.innerText = product.title.slice(0, 40) + "...";
+
+              const img = document.createElement("img");
+              img.src = product.image;
+
+              const btn = document.createElement("button");
+              btn.innerText = `Add To Cart - $${product.price}`;
+
+              btn.addEventListener("click", () => {
+                addToCart(product.title, product.image, product.price);
+              });
+
+              productDiv.appendChild(img);
+              productDiv.appendChild(title);
+              productDiv.appendChild(btn);
+
+              productListDiv.appendChild(productDiv);
+            });
+          });
+      }
+
+      function displayProducts(products) {
+        productListDiv.innerHTML = "";
+        products.forEach((product, index) => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+        <img src="${product.image}" alt="${product.title}" />
+        <h3>${product.title.slice(0, 40)}...</h3>
+        <button onclick="addToCart('${product.title.replace(/'/g, "\\'")}', '${
+            product.image
+          }', ${product.price})">
+          Add To Cart - $${product.price}
+        </button>
+      `;
+          productListDiv.appendChild(div);
+        });
+      }
+
+      function addToCart(name, image, price) {
+        cartItems.push({ name, image, price });
+        total_price += price;
+        saveCart();
+        productShow();
+      }
+
+      function deleteFromCart(index) {
+        total_price -= cartItems[index].price;
+        cartItems.splice(index, 1);
+        saveCart();
+        productShow();
+      }
+
+      function saveCart() {
+        localStorage.setItem("AddToCart", JSON.stringify(cartItems));
+        localStorage.setItem("TotalPrice", total_price.toFixed(2));
+      }
+
+      function productShow() {
+        productUL.innerHTML = "";
+        cartItems.forEach((cart, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+        <img src="${cart.image}" alt="${cart.name}" />
+        <h3>${cart.name.slice(0, 30)}...</h3>
+        <span>$${cart.price}</span>
+        <button onclick="deleteFromCart(${index})">Delete</button>
+      `;
+          productUL.appendChild(li);
+        });
+
+        priceShow.textContent = `Total Price: $${total_price.toFixed(2)}`;
+      }
+      fetchProducts();
+      productShow();
+    </script>
+  </body>
+</html>

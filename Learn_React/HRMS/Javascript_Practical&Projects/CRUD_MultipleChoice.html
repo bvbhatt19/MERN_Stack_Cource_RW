@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      form {
+        margin-bottom: 30px;
+        background: #f4f4f4;
+        padding: 15px;
+        border-radius: 10px;
+        max-width: 600px;
+      }
+
+      input,
+      select,
+      button {
+        display: block;
+        margin: 10px 0;
+        padding: 8px;
+        width: 100%;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      .inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 5px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      button.edit {
+        background-color: #ffc107;
+      }
+
+      button.delete {
+        background-color: #dc3545;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>CRUD Form</h2>
+
+    <form id="crudForm">
+      <label>Name:</label>
+      <input type="text" id="name" required />
+
+      <label>Email:</label>
+      <input type="email" id="email" required />
+
+      <label>Phone:</label>
+      <input type="text" id="phone" required />
+
+      <label>Gender:</label>
+      <div class="inline">
+        <input type="radio" name="gender" value="Male" required /> Male
+        <input type="radio" name="gender" value="Female" /> Female
+      </div>
+
+      <label>City:</label>
+      <select id="city" required>
+        <option value="">Select City</option>
+        <option>Surat</option>
+        <option>Ahmedabad</option>
+        <option>Rajkot</option>
+      </select>
+
+      <label>Study:</label>
+      <div class="inline">
+        <input type="checkbox" value="HTML" class="study" /> HTML
+        <input type="checkbox" value="CSS" class="study" /> CSS
+        <input type="checkbox" value="JavaScript" class="study" /> JavaScript
+      </div>
+
+      <label>Images:</label>
+      <input type="file" id="image" accept="image/*" multiple required />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Images</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Gender</th>
+          <th>City</th>
+          <th>Study</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="dataTable"></tbody>
+    </table>
+
+    <script>
+      let data = JSON.parse(localStorage.getItem("crudData")) || [];
+      let editIndex = null;
+
+      const form = document.getElementById("crudForm");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const phoneInput = document.getElementById("phone");
+      const citySelect = document.getElementById("city");
+      const imageInput = document.getElementById("image");
+      const tableBody = document.getElementById("dataTable");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const gender = document.querySelector(
+          'input[name="gender"]:checked'
+        )?.value;
+        const studies = Array.from(
+          document.querySelectorAll(".study:checked")
+        ).map((el) => el.value);
+        const files = imageInput.files;
+
+        if (!files.length && editIndex === null) return;
+
+        let images = [];
+        let fileIndex = 0;
+
+        function readNextFile() {
+          if (fileIndex < files.length) {
+            const file = files[fileIndex];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+              images.push(reader.result);
+              fileIndex++;
+              readNextFile(); // recursively process the next file
+            };
+
+            reader.onerror = function (err) {
+              console.error("Error reading file", err);
+            };
+
+            reader.readAsDataURL(file);
+          } else {
+            const userData = {
+              name: nameInput.value,
+              email: emailInput.value,
+              phone: phoneInput.value,
+              gender: gender,
+              city: citySelect.value,
+              study: studies.join(", "),
+              images:
+                editIndex === null
+                  ? images
+                  : data[editIndex].images.concat(images),
+            };
+
+            if (editIndex === null) {
+              data.push(userData);
+            } else {
+              data[editIndex] = userData;
+              editIndex = null;
+            }
+
+            localStorage.setItem("crudData", JSON.stringify(data));
+            form.reset();
+            renderTable();
+          }
+        }
+
+        readNextFile(); // Start reading files
+      });
+
+      function renderTable() {
+        tableBody.innerHTML = "";
+        data.forEach((item, index) => {
+          const tr = document.createElement("tr");
+          const images = item.images
+            .map((image) => `<img src="${image}" />`)
+            .join("");
+          tr.innerHTML = `
+        <td>${images}</td>
+        <td>${item.name}</td>
+        <td>${item.email}</td>
+        <td>${item.phone}</td>
+        <td>${item.gender}</td>
+        <td>${item.city}</td>
+        <td>${item.study}</td>
+        <td>
+          <button class="edit" onclick="editData(${index})">Edit</button>
+          <button class="delete" onclick="deleteData(${index})">Delete</button>
+        </td>
+      `;
+          tableBody.appendChild(tr);
+        });
+      }
+
+      function editData(index) {
+        const item = data[index];
+        nameInput.value = item.name;
+        emailInput.value = item.email;
+        phoneInput.value = item.phone;
+        citySelect.value = item.city;
+        document.querySelector(
+          `input[name="gender"][value="${item.gender}"]`
+        ).checked = true;
+
+        document.querySelectorAll(".study").forEach((cb) => {
+          cb.checked = item.study.includes(cb.value);
+        });
+
+        editIndex = index;
+      }
+
+      function deleteData(index) {
+        data.splice(index, 1);
+        localStorage.setItem("crudData", JSON.stringify(data));
+        renderTable();
+      }
+
+      renderTable();
+    </script>
+  </body>
+</html>

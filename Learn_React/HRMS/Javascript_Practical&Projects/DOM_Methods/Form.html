@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signin</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f4f4f4;
+      }
+
+      #main form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        min-width: 300px;
+      }
+
+      #main form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #main form label {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      #main form input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      #main form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #824caf;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #main form button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main"></div>
+  </body>
+</html>
+<script>
+  let div = document.getElementById("main");
+
+  // Create form element
+  const form = document.createElement("form");
+
+  // Create Heading
+  const heading = document.createElement("h2");
+  heading.innerText = "Register Form";
+  form.appendChild(heading);
+
+  // Create Name Field
+  const nameLabel = document.createElement("label");
+  nameLabel.innerText = "Name: ";
+  form.appendChild(nameLabel);
+
+  const nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.name = "name";
+  nameInput.placeholder = "Enter your name";
+  form.appendChild(nameInput);
+  form.appendChild(document.createElement("br"));
+
+  // Create Email Field
+  const emailLabel = document.createElement("label");
+  emailLabel.innerText = "Email: ";
+  form.appendChild(emailLabel);
+
+  const emailInput = document.createElement("input");
+  emailInput.type = "email";
+  emailInput.name = "email";
+  emailInput.placeholder = "Enter your email";
+  form.appendChild(emailInput);
+  form.appendChild(document.createElement("br"));
+
+  // Create Password Field
+  const passwordLabel = document.createElement("label");
+  passwordLabel.innerText = "Password: ";
+  form.appendChild(passwordLabel);
+
+  const passwordInput = document.createElement("input");
+  passwordInput.type = "password";
+  passwordInput.name = "password";
+  passwordInput.placeholder = "Enter your password";
+  form.appendChild(passwordInput);
+  form.appendChild(document.createElement("br"));
+
+  // Create Register Button
+  const registerBtn = document.createElement("button");
+  registerBtn.type = "submit";
+  registerBtn.innerText = "Register";
+  form.appendChild(registerBtn);
+
+  // Append form to container
+  div.append(form);
+</script>

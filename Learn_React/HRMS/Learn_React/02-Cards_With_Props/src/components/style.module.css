@@ -1,0 +1,23 @@
+.rating-green {
+  background-color: rgba(0, 128, 0, 0.367);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.rating_yellow {
+  background-color: rgba(255, 255, 0, 0.526);
+  color: black;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.rating_orange {
+  background-color: rgba(255, 166, 0, 0.599);
+  color: black;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}

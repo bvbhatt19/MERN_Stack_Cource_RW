@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Account App</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      h2 {
+        color: #333;
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      form {
+        background: #fff;
+        padding: 20px;
+        max-width: 400px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      table {
+        width: 90%;
+        margin: 40px auto;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      u {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h2><u>Account Form</u></h2>
+    <form id="accountForm">
+      <input type="text" placeholder="Enter Customer Name" id="customerName" />
+      <br /><br />
+      <input type="number" placeholder="Enter Balance" id="balance" />
+      <br /><br />
+      <button type="submit">Create Account</button>
+    </form>
+
+    <h2><u>Deposit Form</u></h2>
+    <form id="depositForm">
+      <input
+        type="number"
+        placeholder="Enter Account Number"
+        id="depositAccountNumber"
+      />
+      <br /><br />
+      <input
+        type="number"
+        placeholder="Enter Deposit Amount"
+        id="depositAmount"
+      />
+      <br /><br />
+      <button type="submit">Deposit</button>
+    </form>
+
+    <h2><u>Withdraw Form</u></h2>
+
+    <form id="withdrawForm">
+      <input
+        type="number"
+        placeholder="Enter Account Number"
+        id="withdrawAccountNumber"
+      />
+      <br /><br />
+      <input
+        type="number"
+        placeholder="Enter Withdraw Amount"
+        id="withdrawAmount"
+      />
+      <br /><br />
+      <button type="submit">Withdraw</button>
+    </form>
+    <br /><br />
+    <table>
+      <thead>
+        <tr>
+          <th>Sr No</th>
+          <th>Customer Name</th>
+          <th>Account Number</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody id="tableData"></tbody>
+    </table>
+  </body>
+</html>
+
+<script>
+  class BankAccount {
+    constructor(customerName = "Unknown", balance = 100) {
+      this.customerName = customerName;
+      this.accountNumber = Math.floor(Math.random() * 1000000000000);
+      this.balance = balance;
+    }
+
+    deposit(amount) {
+      this.balance += amount;
+    }
+
+    withdraw(amount) {
+      if (amount <= this.balance) {
+        this.balance -= amount;
+      } else {
+        alert("Not Enough Money to Withdraw.....");
+      }
+    }
+  }
+
+  let accountForm = document.getElementById("accountForm");
+  let customerName = document.getElementById("customerName");
+  let balance = document.getElementById("balance");
+  let accounts = JSON.parse(localStorage.getItem("BankAccount")) || [];
+
+  accountForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let account = new BankAccount(customerName.value, +balance.value);
+    accounts.push(account);
+    localStorage.setItem("BankAccount", JSON.stringify(accounts));
+    dataShow();
+    e.target.reset();
+  });
+
+  let depositForm = document.getElementById("depositForm");
+  let depositAccountNumber = document.getElementById("depositAccountNumber");
+  let depositAmount = document.getElementById("depositAmount");
+
+  depositForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let account = accounts.find(
+      (acc) => acc.accountNumber === +depositAccountNumber.value
+    );
+
+    if (account) {
+      account.deposit(+depositAmount.value);
+      localStorage.setItem("BankAccount", JSON.stringify(accounts));
+      dataShow();
+    } else {
+      alert("Please Check Account Number First...");
+    }
+
+    console.log(accounts);
+
+    e.target.reset();
+  });
+
+  let withdrawForm = document.getElementById("withdrawForm");
+  let withdrawAccountNumber = document.getElementById("withdrawAccountNumber");
+  let withdrawAmount = document.getElementById("withdrawAmount");
+
+  withdrawForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let account = accounts.find(
+      (acc) => acc.accountNumber === +withdrawAccountNumber.value
+    );
+
+    if (account) {
+      account.withdraw(+withdrawAmount.value);
+      localStorage.setItem("BankAccount", JSON.stringify(accounts));
+      dataShow();
+    } else {
+      alert("Please Check Account Number First...");
+    }
+
+    console.log(accounts);
+
+    e.target.reset();
+  });
+
+  const dataShow = () => {
+    let tr = "";
+
+    accounts.map((acc, index) => {
+      tr += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${acc.customerName}</td>
+          <td>${acc.accountNumber}</td>
+          <td>${acc.balance}</td>
+        </tr>
+      `;
+
+      document.getElementById("tableData").innerHTML = tr;
+    });
+  };
+
+  dataShow();
+</script>

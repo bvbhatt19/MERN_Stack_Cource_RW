@@ -1,0 +1,95 @@
+function Cards() {
+  const age = true;
+
+  function handleClick() {
+    if (age) {
+      alert("You Can Purchase!");
+    } else {
+      alert("Out Of Stock!");
+    }
+  }
+
+  const data = [
+    {
+      image:
+        "https://www.gsmimpex.in/images/Electronics/Digital%20Cameras%20wholesaler.jpg",
+      name: "Sony",
+      price: "50 $",
+    },
+    {
+      image:
+        "https://www.intex.in/cdn/shop/products/1_9b8014ad-124e-4742-a628-9a4c4affe617.jpg?v=1648711109",
+      name: "Intex 32 HD LED TV | LED-3243 (80cm)",
+      price: "80 $",
+    },
+    {
+      image:
+        "https://whirlpoolindia.vtexassets.com/arquivos/ids/165797-800-auto?v=638705348977430000&width=800&height=auto&aspect=true",
+      name: "Whirlpool Intellifresh ",
+      price: "90 $",
+    },
+    {
+      image:
+        "https://opsg-img-cdn-gl.heytapimg.com/epb/202412/19/AceLeaXtntKw1AZf.png",
+      name: "Smartphone",
+      price: "60 $",
+    },
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDwOC6_XLG0gr4PCKqb1CzYd1SzD6yb39CkA&s",
+      name: "Laptop",
+      price: "30 $",
+    },
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGtSF57VY9AWkYavK_Qdn5I6wN0om4IO-zuw&s",
+      name: "Wireless Headphones",
+      price: "19 $",
+    },
+    {
+      image:
+        "https://m.media-amazon.com/images/I/611KpNJPr4L._AC_UF1000,1000_QL80_.jpg",
+      name: "Smartwatch",
+      price: "20 $",
+    },
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsC8INLPLeMJIfOyHtUPn5reBFG4irIFQtyg&s",
+      name: "Tablet MNO",
+      price: "49 $",
+    },
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy6wb-QeG26szfKEQ0vYbacMrq_t0WOEjv1Q&s",
+      name: "Bluetooth Speaker",
+      price: "60 $",
+    },
+    {
+      image:
+        "https://5.imimg.com/data5/SELLER/Default/2023/1/WY/NN/CH/125434654/ps5-gaming-console-500x500.png",
+      name: "Gaming Console",
+      price: "65 $",
+    },
+  ];
+
+  return (
+    <>
+      <div className="main">
+        {data.map((item, index) => (
+          <div className="main-item">
+            <div className="Image">
+              <img src={item.image} alt={item.name} />
+            </div>
+            <h2>{item.name}</h2>
+            <p>{item.price}</p>
+            <button className="btn" onClick={handleClick}>
+              Buy
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default Cards;

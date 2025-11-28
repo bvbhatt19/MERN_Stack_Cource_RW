@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body id="main" style="background-color: rgba(173, 216, 230, 0.37)"></body>
+</html>
+<script>
+  // function createAndAppend() {
+  //   const newDiv = document.createElement("div");
+  //   const textNode = document.createTextNode("Hello, this is a text node.");
+  //   const comment = document.createComment("This is a comment");
+  //   newDiv.appendChild(textNode);
+  //   newDiv.appendChild(comment);
+  //   document.body.appendChild(newDiv);
+  // }
+  // createAndAppend();
+
+  function createCard1() {
+    const body = document.getElementById("main");
+    body.style.display = "flex";
+    body.style.justifyContent = "center";
+    body.style.padding = "150px";
+
+    body.style.gap = "50px";
+
+    const card1 = document.createElement("div");
+    card1.style.backgroundColor = "white";
+    card1.style.border = "2px solid";
+    card1.style.borderRadius = "5px";
+    card1.style.width = "250px";
+    card1.style.display = "flex";
+    card1.style.flexDirection = "column";
+    card1.style.alignItems = "center";
+    card1.style.overflow = "hidden";
+    card1.style.paddingBottom = "10px";
+    const imgNode = document.createElement("img");
+
+    imgNode.src =
+      "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D";
+    imgNode.style.height = "200px";
+    imgNode.style.width = "250px";
+    const pnode = document.createElement("p");
+    const ptext = document.createTextNode(
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. impedit explicabo. Recusandae culpa amet alias optio qui?"
+    );
+    const btn = document.createElement("button");
+    const btnvalue = document.createTextNode("Click Me");
+    btn.style.border = "none";
+    btn.style.padding = "10px 30px";
+    btn.style.borderRadius = "5px";
+    btn.style.backgroundColor = "coral";
+    btn.append(btnvalue);
+    pnode.appendChild(ptext);
+    card1.appendChild(imgNode);
+    card1.appendChild(pnode);
+    card1.append(btn);
+    document.body.appendChild(card1);
+  }
+  createCard1();
+  createCard1();
+  createCard1();
+  createCard1();
+</script>
